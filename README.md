@@ -1,24 +1,32 @@
-# README
+# Setup
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Regardless your approach to launch the application, get the env vars:
 
-Things you may want to cover:
+```bash
+  $ cp .env.example .env
+```
 
-* Ruby version
+### Everything in Docker
 
-* System dependencies
+```bash
+  $ docker-compose build
+  $ docker-compose up -d
+  $ docker-compose run app rails db:create db:migrate
+```
 
-* Configuration
+### Postgres in Docker, Rails bare metal
 
-* Database creation
+Change your `DB_HOST` env var to `localhost` and:
 
-* Database initialization
+```bash
+  $ docker-compose up -d db
+  $ rails db:create db:migrate
+```
 
-* How to run the test suite
+### Troubleshooting
 
-* Services (job queues, cache servers, search engines, etc.)
+Having problems with folder permissions when using Docker in Linux? Try running:
 
-* Deployment instructions
-
-* ...
+```bash
+  $ sudo chown -R ${USER}:${USER} tmp/db
+```

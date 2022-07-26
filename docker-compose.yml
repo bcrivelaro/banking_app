@@ -1,0 +1,24 @@
+
+version: "3"
+
+services:
+  db:
+    image: postgres:alpine
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432:5432"
+  app:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/banking_app
+    ports:
+      - "3000:3000"
+    env_file: .env
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
