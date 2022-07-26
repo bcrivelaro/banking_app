@@ -51,6 +51,13 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'bullet', '~> 7.0.2'
+  gem 'rspec-rails', '~> 5.1.2'
+  gem 'factory_bot_rails', '~> 6.2.0'
+  gem 'pry-rails', '~> 0.3.9'
+  gem 'rubocop', '~> 1.32', require: false
+  gem 'rubocop-rails', '~> 2.15.2'
+  gem 'shoulda-matchers', '~> 5.1.0'
 end
 
 group :development do
@@ -69,4 +76,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'simplecov', '~> 0.21.2', require: false
 end
