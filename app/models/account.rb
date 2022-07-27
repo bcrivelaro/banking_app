@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Account < ApplicationRecord
+  has_paper_trail
+
   belongs_to :user
   has_many :transactions, lambda { |acc|
                             unscope(:where).where(from_account: acc).or(where(to_account: acc))
