@@ -1,12 +1,18 @@
+# frozen_string_literal: true
+
 RSpec.describe Transaction, type: :model do
   it do
     should define_enum_for(:transaction_type)
       .with_values(deposit: 'deposit', transfer: 'transfer')
       .backed_by_column_of_type(:string)
   end
-  it { should belong_to(:from_account).class_name('Account').with_foreign_key('from_account_id').optional }
-  it { should belong_to(:to_account).class_name('Account').with_foreign_key('to_account_id') }
-  it { should validate_numericality_of(:amount_in_cents).is_greater_than_or_equal_to(0).only_integer }
+  it {
+    should belong_to(:from_account).class_name('Account').optional
+  }
+  it { should belong_to(:to_account).class_name('Account') }
+  it {
+    should validate_numericality_of(:amount_in_cents).is_greater_than_or_equal_to(0).only_integer
+  }
 
   describe '#valid?' do
     context 'when transaction_type is deposit' do
@@ -37,7 +43,7 @@ RSpec.describe Transaction, type: :model do
     [
       { amount_in_cents: 100, expected_amount: 1 },
       { amount_in_cents: 1000, expected_amount: 10 },
-      { amount_in_cents: 19148, expected_amount: 191.48 },
+      { amount_in_cents: 19_148, expected_amount: 191.48 }
     ].each do |example|
       it 'returns the expected amount in dollars' do
         account = build :transaction, amount_in_cents: example[:amount_in_cents]

@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 class Account < ApplicationRecord
   belongs_to :user
-  has_many :transactions, ->(acc) { unscope(:where).where(from_account: acc).or(where(to_account: acc)) }
+  has_many :transactions, lambda { |acc|
+                            unscope(:where).where(from_account: acc).or(where(to_account: acc))
+                          }
 
   validates :user_id, uniqueness: { case_sensitive: false }
   validates :account_number, presence: true, uniqueness: { case_sensitive: false }
@@ -20,7 +24,7 @@ class Account < ApplicationRecord
     loop do
       self.account_number = rand.to_s[2..9]
 
-      break unless Account.where(account_number: self.account_number).exists?
+      break unless Account.where(account_number:).exists?
     end
   end
 end

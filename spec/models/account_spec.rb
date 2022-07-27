@@ -1,10 +1,14 @@
+# frozen_string_literal: true
+
 RSpec.describe Account, type: :model do
   subject { build :account, user: create(:user), account_number: '123' }
 
   it { should belong_to(:user) }
 
   it { should validate_uniqueness_of(:user_id).case_insensitive }
-  it { should validate_numericality_of(:balance_in_cents).is_greater_than_or_equal_to(0).only_integer }
+  it {
+    should validate_numericality_of(:balance_in_cents).is_greater_than_or_equal_to(0).only_integer
+  }
 
   describe '#valid?' do
     context 'when record is not persisted (before_validation)' do
@@ -19,7 +23,9 @@ RSpec.describe Account, type: :model do
           allow(Account).to receive_message_chain(:where, :exists?).and_return(true, false)
           account = build :account, account_number: nil
 
-          expect { account.valid? }.to change { account.account_number.present? }.from(false).to(true)
+          expect { account.valid? }.to change {
+                                         account.account_number.present?
+                                       }.from(false).to(true)
         end
       end
     end
@@ -50,7 +56,7 @@ RSpec.describe Account, type: :model do
     [
       { balance_in_cents: 100, expected_balance: 1 },
       { balance_in_cents: 1000, expected_balance: 10 },
-      { balance_in_cents: 19148, expected_balance: 191.48 },
+      { balance_in_cents: 19_148, expected_balance: 191.48 }
     ].each do |example|
       it 'returns the expected balance in dollars' do
         account = build :account, balance_in_cents: example[:balance_in_cents]
@@ -76,8 +82,10 @@ RSpec.describe Account, type: :model do
                                            to_account: account_1
       create :transaction, transaction_type: :deposit, from_account: nil, to_account: account_1
       create :transaction, transaction_type: :deposit, from_account: nil, to_account: account_3
-      create :transaction, transaction_type: :transfer, from_account: account_1, to_account: account_3
-      create :transaction, transaction_type: :transfer, from_account: account_3, to_account: account_1
+      create :transaction, transaction_type: :transfer, from_account: account_1,
+                           to_account: account_3
+      create :transaction, transaction_type: :transfer, from_account: account_3,
+                           to_account: account_1
 
       expect(account_2.transactions).to match_array([transaction_1, transaction_2, transaction_3])
     end
