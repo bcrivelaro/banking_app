@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_27_172523) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_27_182853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -23,6 +23,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_27_172523) do
     t.datetime "updated_at", null: false
     t.index ["account_number"], name: "index_accounts_on_account_number", unique: true
     t.index ["user_id"], name: "index_accounts_on_user_id", unique: true
+  end
+
+  create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "transaction_type", null: false
+    t.uuid "from_account_id"
+    t.uuid "to_account_id", null: false
+    t.integer "amount_in_cents", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_account_id"], name: "index_transactions_on_from_account_id"
+    t.index ["to_account_id"], name: "index_transactions_on_to_account_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -44,4 +55,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_27_172523) do
   end
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "transactions", "accounts", column: "from_account_id"
+  add_foreign_key "transactions", "accounts", column: "to_account_id"
 end

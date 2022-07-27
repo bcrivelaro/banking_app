@@ -59,4 +59,27 @@ RSpec.describe Account, type: :model do
       end
     end
   end
+
+  describe '#transactions' do
+    it 'returns all transactions associated with the account' do
+      account_1 = create :account
+      account_2 = create :account
+      account_3 = create :account
+      transaction_1 = create :transaction, transaction_type: :deposit,
+                                           from_account: nil,
+                                           to_account: account_2
+      transaction_2 = create :transaction, transaction_type: :transfer,
+                                           from_account: account_1,
+                                           to_account: account_2
+      transaction_3 = create :transaction, transaction_type: :transfer,
+                                           from_account: account_2,
+                                           to_account: account_1
+      create :transaction, transaction_type: :deposit, from_account: nil, to_account: account_1
+      create :transaction, transaction_type: :deposit, from_account: nil, to_account: account_3
+      create :transaction, transaction_type: :transfer, from_account: account_1, to_account: account_3
+      create :transaction, transaction_type: :transfer, from_account: account_3, to_account: account_1
+
+      expect(account_2.transactions).to match_array([transaction_1, transaction_2, transaction_3])
+    end
+  end
 end

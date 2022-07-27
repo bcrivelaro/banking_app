@@ -1,5 +1,6 @@
 class Account < ApplicationRecord
   belongs_to :user
+  has_many :transactions, ->(acc) { unscope(:where).where(from_account: acc).or(where(to_account: acc)) }
 
   validates :user_id, uniqueness: { case_sensitive: false }
   validates :account_number, presence: true, uniqueness: { case_sensitive: false }
