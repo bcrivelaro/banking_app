@@ -38,5 +38,6 @@ en:
           attributes:
             to_account_number:
               account_not_found: account not found with given account number
+              cannot_transfer_to_same_account: cannot transfer to same account
             from_account:
               non_sufficient_funds: account does not have sufficient funds
