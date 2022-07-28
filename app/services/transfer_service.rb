@@ -51,6 +51,7 @@ class TransferService
   def valid_amount
     return if amount.blank?
     return if errors[:amount].present?
+    return unless amount.is_a?(String)
 
     begin
       @amount = BigDecimal(amount)
