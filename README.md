@@ -23,6 +23,15 @@ Change your `DB_HOST` env var to `localhost` and:
   $ rails db:create db:migrate
 ```
 
+### Create user and deposit money
+
+Open rails console and run the following:
+```ruby
+  user = User.create!(name: 'User', email: 'user@email.com', password: '123456', password_confirmation: '123456')
+  account = Account.create!(user: user)
+  DepositService.new(to_account: account, amount: 100).save
+```
+
 ### Troubleshooting
 
 Having problems with folder permissions when using Docker in Linux? Try running:
