@@ -65,6 +65,15 @@ RSpec.describe TransferService do
       end
     end
 
+    context 'when to account number is the same from_account' do
+      let(:to_account_number) { from_account.account_number }
+
+      it do
+        expect(service.valid?).to eq(false)
+        expect(service.errors[:to_account_number]).to eq(['cannot transfer to same account'])
+      end
+    end
+
     context 'when from account does not have sufficient funds' do
       it do
         expect(from_account.balance).to eq(0)

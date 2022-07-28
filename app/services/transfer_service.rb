@@ -7,6 +7,8 @@ class TransferService
   validates :to_account_number, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
   validate :to_account_exists
+  validate :different_accounts
+  validate :valid_amount
   validate :from_account_has_sufficient_balance
 
   def initialize(from_account:, to_account_number:, amount:)
@@ -38,6 +40,25 @@ class TransferService
     errors.add(:to_account_number, :account_not_found)
   end
 
+  def different_accounts
+    return if from_account.blank?
+    return if to_account.blank?
+    return if to_account.account_number != from_account.account_number
+
+    errors.add(:to_account_number, :cannot_transfer_to_same_account)
+  end
+
+  def valid_amount
+    return if amount.blank?
+    return if errors[:amount].present?
+
+    begin
+      @amount = BigDecimal(amount)
+    rescue ArgumentError
+      errors.add(:amount, :not_a_number)
+    end
+  end
+
   def from_account_has_sufficient_balance
     return if from_account.blank?
     return unless amount.is_a?(Numeric)
@@ -47,7 +68,7 @@ class TransferService
   end
 
   def amount_in_cents
-    @amount_in_cents ||= amount * 100
+    @amount_in_cents ||= (amount * 100).to_i
   end
 
   def create_transaction!
