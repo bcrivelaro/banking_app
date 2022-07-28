@@ -1,0 +1,44 @@
+<p>
+  Your account number is <b><%= current_account.account_number %></b>.
+  Share it with your friends so they can send you money!
+</p>
+
+<%= button_to 'Transfer money', new_transfer_path, method: :get %>
+
+<% if @transactions.any? %>
+  <h3>Transactions</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @transactions.each do |transaction| %>
+        <tr>
+          <td><%= I18n.l(transaction.created_at, format: :long) %></td>
+          <td>
+            <% if transaction.deposit? %>
+              Deposit
+            <% else %>
+              Transfer
+              <% if transaction.to_account == current_account %>
+                from account number <%= transaction.from_account.account_number %>
+              <% else %>
+                to account number <%= transaction.to_account.account_number %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>$ <%= transaction.amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<br>
+
+<%= button_to 'Logout', destroy_user_session_path, method: :delete %>

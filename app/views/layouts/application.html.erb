@@ -13,6 +13,10 @@
   <body>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <% if current_user && current_account %>
+      <h1>Hi <%= current_user.name %>!</h1>
+      <p>Your balance is $ <%= current_account.balance %>.</p>
+    <% end %>
     <%= yield %>
   </body>
 </html>
