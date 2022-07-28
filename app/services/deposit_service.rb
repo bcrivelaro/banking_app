@@ -5,6 +5,7 @@ class DepositService
 
   validates :to_account, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
+  validate :valid_amount
 
   def initialize(to_account:, amount:)
     @to_account = to_account
@@ -24,8 +25,19 @@ class DepositService
 
   attr_reader :to_account, :amount
 
+  def valid_amount
+    return if amount.blank?
+    return if errors[:amount].present?
+
+    begin
+      @amount = BigDecimal(amount)
+    rescue ArgumentError
+      errors.add(:amount, :not_a_number)
+    end
+  end
+
   def amount_in_cents
-    @amount_in_cents ||= amount * 100
+    @amount_in_cents ||= (amount * 100).to_i
   end
 
   def create_transaction!
