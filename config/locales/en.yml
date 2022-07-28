@@ -31,3 +31,12 @@
 
 en:
   hello: "Hello world"
+  activemodel:
+    errors:
+      models:
+        transfer_service:
+          attributes:
+            to_account_number:
+              account_not_found: account not found with given account number
+            from_account:
+              non_sufficient_funds: account does not have sufficient funds
