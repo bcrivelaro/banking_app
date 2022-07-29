@@ -10,7 +10,7 @@ FactoryBot.define do
     end
 
     after(:create) do |account, evaluator|
-      if evaluator.with_deposit.present?
+      if evaluator.with_deposit.present? && evaluator.with_deposit > 0
         DepositService.new(to_account: account, amount: evaluator.with_deposit).save
       end
     end
