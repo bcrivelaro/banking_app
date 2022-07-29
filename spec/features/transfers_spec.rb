@@ -25,7 +25,7 @@ RSpec.feature 'Transfers', type: :feature do
 
         expect(page).to have_text('New transfer')
         fill_in 'To account number', with: to_account.account_number
-        fill_in 'Amount', with: 9999999999
+        fill_in 'Amount', with: 9_999_999_999
 
         click_button('Transfer')
 
