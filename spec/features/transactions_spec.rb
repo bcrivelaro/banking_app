@@ -1,6 +1,8 @@
-RSpec.feature "Transactions", :type => :feature do
+# frozen_string_literal: true
+
+RSpec.feature 'Transactions', type: :feature do
   let(:user) { create :user, password: '123456', password_confirmation: '123456' }
-  let(:account) { create :account, user: user }
+  let(:account) { create :account, user: }
 
   context 'when user is not signed in' do
     scenario 'redirects to sign in' do
@@ -26,7 +28,7 @@ RSpec.feature "Transactions", :type => :feature do
       expect(page).to have_button('Transfer money')
       expect(page).to have_text('Transactions')
       expect(page).to have_text('Deposit')
-      expect(page).to have_text("$ #{transaction.amount.to_s}")
+      expect(page).to have_text("$ #{transaction.amount}")
       expect(page).to have_button('Logout')
     end
   end
