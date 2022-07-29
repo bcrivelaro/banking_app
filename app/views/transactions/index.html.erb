@@ -3,7 +3,7 @@
   Share it with your friends so they can send you money!
 </p>
 
-<%= button_to 'Transfer money', new_transfer_path, method: :get %>
+<%= button_to 'Transfer money', new_transfer_path, method: :get, class: 'button-primary' %>
 
 <% if @transactions.any? %>
   <h3>Transactions</h3>
@@ -32,7 +32,7 @@
               <% end %>
             <% end %>
           </td>
-          <td>$ <%= transaction.amount %></td>
+          <td>$ <%= sprintf('%0.02f', transaction.amount) %></td>
         </tr>
       <% end %>
     </tbody>

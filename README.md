@@ -23,6 +23,7 @@ Change your `DB_HOST` env var to `localhost` and:
 ```bash
   $ docker-compose up -d db
   $ rails db:create db:migrate
+  $ rails server
 ```
 
 ### Create user and deposit money
@@ -40,4 +41,10 @@ Having problems with folder permissions when using Docker in Linux? Try running:
 
 ```bash
   $ sudo chown -R ${USER}:${USER} tmp/db
+```
+
+If the problem persists, try:
+
+```bash
+  $ sudo chown -R ${USER}:${USER} .
 ```

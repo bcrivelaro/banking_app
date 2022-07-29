@@ -2,7 +2,7 @@
 
 <% if @service && @service.errors.any? %>
   <% @service.errors.full_messages.each do |error_msg| %>
-    <p><%= error_msg %></p>
+    <p style="color: #e62e2e"><%= error_msg %></p>
   <% end %>
 <% end %>
 
@@ -10,12 +10,10 @@
   <%= form.label :to_account_number %>
   <%= form.number_field :to_account_number, required: true %>
   <br>
-  <%= form.label :amount %>
+  <%= form.label :amount, 'Amount $' %>
   <%= form.number_field :amount, min: 0, step: 0.01, required: true %>
   <br>
-  <%= form.submit 'Transfer' %>
+  <%= form.submit 'Transfer', class: 'button-primary' %>
 <% end %>
-
-<br>
 
 <%= button_to 'Back', transactions_path, method: :get %>
