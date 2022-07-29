@@ -1,3 +1,5 @@
+![example workflow](https://github.com/bcrivelaro/banking_app/actions/workflows/ci.yml/badge.svg)
+
 # Setup
 
 Regardless your approach to launch the application, get the env vars:
