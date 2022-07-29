@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_27_225509) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_29_161932) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_27_225509) do
   create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "account_number", null: false
-    t.integer "balance_in_cents", default: 0, null: false
+    t.bigint "balance_in_cents", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_number"], name: "index_accounts_on_account_number", unique: true
@@ -29,7 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_27_225509) do
     t.string "transaction_type", null: false
     t.uuid "from_account_id"
     t.uuid "to_account_id", null: false
-    t.integer "amount_in_cents", null: false
+    t.bigint "amount_in_cents", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["from_account_id"], name: "index_transactions_on_from_account_id"
