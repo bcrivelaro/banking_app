@@ -46,6 +46,12 @@ RSpec.describe DepositService do
     context 'when all attributes are valid' do
       it { expect(service.valid?).to eq(true) }
     end
+
+    context 'when amount is valid string' do
+      let(:amount) { '28.12' }
+
+      it { expect(service.valid?).to eq(true) }
+    end
   end
 
   describe '#save' do

@@ -30,11 +30,7 @@ class DepositService
     return if errors[:amount].present?
     return unless amount.is_a?(String)
 
-    begin
-      @amount = BigDecimal(amount)
-    rescue ArgumentError
-      errors.add(:amount, :not_a_number)
-    end
+    @amount = BigDecimal(amount)
   end
 
   def amount_in_cents

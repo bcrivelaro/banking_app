@@ -90,6 +90,13 @@ RSpec.describe TransferService do
         expect(service.valid?).to eq(true)
       end
     end
+
+    context 'when amount is valid string' do
+      let(:from_account) { create :account, with_deposit: 100 }
+      let(:amount) { '11.12' }
+
+      it { expect(service.valid?).to eq(true) }
+    end
   end
 
   describe '#save' do

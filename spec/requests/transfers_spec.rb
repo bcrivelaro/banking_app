@@ -76,12 +76,6 @@ RSpec.describe '/transfers', type: :request do
           )
         end
 
-        it 'does create Transaction for to_account' do
-          expect do
-            post '/transfers', params: { amount: 20, to_account_number: to_account.account_number }
-          end
-        end
-
         it 'does change from account balance' do
           expect do
             post '/transfers', params: { amount: 20, to_account_number: to_account.account_number }
