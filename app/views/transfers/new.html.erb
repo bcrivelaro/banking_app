@@ -11,7 +11,7 @@
   <%= form.number_field :to_account_number, required: true %>
   <br>
   <%= form.label :amount, 'Amount $' %>
-  <%= form.number_field :amount, min: 0, step: 0.01, required: true %>
+  <%= form.number_field :amount, min: 0.01, step: 0.01, required: true %>
   <br>
   <%= form.submit 'Transfer', class: 'button-primary' %>
 <% end %>
