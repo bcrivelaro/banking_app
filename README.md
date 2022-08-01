@@ -35,6 +35,12 @@ Open rails console and run the following:
   DepositService.new(to_account: account, amount: 100).save
 ```
 
+### Tests
+
+```ruby
+  bundle exec rspec
+```
+
 ### Troubleshooting
 
 Having problems with folder permissions when using Docker in Linux? Try running:
